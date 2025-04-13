@@ -85,6 +85,8 @@ const ChatWindow = () => {
 	};
 
 	const handleOnSubmit = () => {
+		if (inputValue === "") 
+			return; // nếu input rỗng thì không làm gì cả
 		addDocument("messages", {
 			text: inputValue,
 			uid,
@@ -94,6 +96,7 @@ const ChatWindow = () => {
 		});
 
 		form.resetFields(["message"]); // reset lại form sau khi gửi tin nhắn
+		setInputValue(""); // reset lại giá trị của input
 	};
 
 	const condition = useMemo(() => {
@@ -105,7 +108,6 @@ const ChatWindow = () => {
 	}, [selectedRoom.id]); // tạo điều kiện để lấy danh sách tin nhắn từ firestore
 
 	const messages = useFirestore("messages", condition); // lấy danh sách tin nhắn từ firestore
-	// console.log({ messages });
 	return (
 		<WrapperStyled>
 			{selectedRoom.id ? (
@@ -166,11 +168,12 @@ const ChatWindow = () => {
 						<FormStyled form={form}>
 							<Form.Item name="message">
 								<Input
+									value={inputValue}
 									onChange={handleInputChange}
 									onPressEnter={handleOnSubmit}
 									placeholder="Nhập tin nhắn..."
 									variant="outlined"
-									autoComplete="off"></Input>
+									autoComplete="off" autoFocus></Input>
 							</Form.Item>
 							<Button
 								type="primary"
