@@ -16,12 +16,12 @@ const AddRoomModal = () => {
 	const handleOk = () => {
 		// Handle OK action
 		// Add new room to Firestore
-		// form.getFieldsValue() la object cac gia tri cua form { name: "abc", description: "abc"}
 		if (roomName === "" || roomDescription === "") {
 			alert("Vui lòng nhập đầy đủ thông tin");
 			return;
 		}
-
+		
+		// form.getFieldsValue() la object cac gia tri cua form { name: "abc", description: "abc"}
 		addDocument("rooms", {
 			...form.getFieldsValue(),
 			members: [uid],
